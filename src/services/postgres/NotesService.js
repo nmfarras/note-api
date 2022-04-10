@@ -1,8 +1,11 @@
 /* eslint-disable no-underscore-dangle */
 const { Pool } = require('pg');
 const { nanoid } = require('nanoid');
+
+// exceptions
 const InvariantError = require('../../exceptions/InvariantError');
 const NotFoundError = require('../../exceptions/NotFoundError');
+
 const { mapDBToModel } = require('../../utils/mapDBToModel');
 
 class NotesService {
