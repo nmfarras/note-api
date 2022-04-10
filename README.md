@@ -62,3 +62,26 @@ npm run migrate up
 ```
 
 this command will create table on the database based on the setting available on migrations folder.
+
+# Erasing database PostgreSQL table and data
+Open psql cli. Connect to the database.
+
+```perl
+psql=# \c notesapp
+```
+
+in the example, `notesapp` is the database name.
+
+To erase the data, use following command:
+
+```perl
+notesapp=# truncate notes, users, authentications;
+```
+
+the `truncate` command erase data for respective table, and in this case are `notes`, `users`, and `authentications`.
+
+To delete the table, use `DROP` command:
+
+```perl
+notesapp=# drop table authentications, users, pgmigrations, notes;
+```
