@@ -11,6 +11,7 @@ class NotesHandler {
     this.getNoteByIdHandler = this.getNoteByIdHandler.bind(this);
     this.putNoteByIdHandler = this.putNoteByIdHandler.bind(this);
     this.deleteNoteByIdHandler = this.deleteNoteByIdHandler.bind(this);
+    this.getUsersByUsernameHandler = this.getUsersByUsernameHandler.bind(this);
   }
 
   async postNoteHandler(request, h) {
@@ -128,6 +129,32 @@ class NotesHandler {
       return {
         status: 'success',
         message: 'Catatan berhasil dihapus',
+      };
+    } catch (error) {
+      if (error instanceof ClientError) {
+        return error;
+      }
+
+      // Server ERROR!
+      const response = h.response({
+        status: 'error',
+        message: 'Maaf, terjadi kegagalan pada server kami.',
+      });
+      response.code(500);
+      console.error(error);
+      return response;
+    }
+  }
+
+  async getUsersByUsernameHandler(request, h) {
+    try {
+      const { username = '' } = request.query;
+      const users = await this._service.getUsersByUsername(username);
+      return {
+        status: 'success',
+        data: {
+          users,
+        },
       };
     } catch (error) {
       if (error instanceof ClientError) {
