@@ -63,7 +63,7 @@ npm run migrate up
 
 this command will create table on the database based on the setting available on migrations folder.
 
-# Erasing database PostgreSQL table and data
+## Erasing database PostgreSQL table and data
 Open psql cli. Connect to the database.
 
 ```perl
