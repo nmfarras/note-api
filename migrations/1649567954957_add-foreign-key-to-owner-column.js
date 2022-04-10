@@ -1,10 +1,20 @@
 /* eslint-disable camelcase */
+const { nanoid } = require('nanoid');
+const bcrypt = require('bcrypt');
 
 exports.shorthands = undefined;
 
-exports.up = (pgm) => {
+exports.up = async (pgm) => {
   // membuat user baru.
-  pgm.sql("INSERT INTO users(id, username, password, fullname) VALUES ('old_notes', 'old_notes', 'old_notes', 'old notes')");
+  const apo = "'";
+  let id = `user-${nanoid(16)}`;
+  id = apo + id + apo;
+
+  const password = 'old_notes';
+  let hashedPassword = await bcrypt.hash(password, 10);
+  hashedPassword = apo + hashedPassword + apo;
+
+  pgm.sql(`INSERT INTO users(id, username, password, fullname) VALUES (${id}, 'old_notes', ${hashedPassword}, 'old notes')`);
 
   // mengubah nilai owner pada note yang owner-nya bernilai NULL
   pgm.sql("UPDATE notes SET owner = 'old_notes' WHERE owner = NULL");
